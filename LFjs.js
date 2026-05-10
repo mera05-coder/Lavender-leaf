@@ -9,7 +9,6 @@ let currentStep = 1;
 const totalSteps = 5;
 
 // --- AI CONFIGURATION ---
-// Ensure this key is exactly as it appears in Google AI Studio
 const API_KEY = "AIzaSyDLIQZ-XUGLxnlPzapXWJDVu3ZJ5n2sar4"; 
 
 async function getAIPlan() {
@@ -17,6 +16,12 @@ async function getAIPlan() {
     const nutritionBox = document.getElementById('nutrition-output');
     const workoutBox = document.getElementById('workout-output');
     const mentalBox = document.getElementById('mental-output');
+    
+    // Check if elements exist
+    if (!nutritionBox || !workoutBox || !mentalBox) {
+        console.error("Output elements not found in DOM");
+        return;
+    }
     
     // Capture user data for the prompt
     const name = document.getElementById('user-name')?.value || "User";
@@ -73,7 +78,16 @@ function updateUI() {
         document.getElementById('app-footer').style.display = 'none';
         document.getElementById('progress-area').style.display = 'none';
         document.getElementById('header-desc').style.display = 'none';
-        getAIPlan();
+        
+        // Use setTimeout to ensure DOM elements are ready
+        setTimeout(() => {
+            getAIPlan();
+        }, 100);
+    } else {
+        // Show navigation elements for other steps
+        document.getElementById('app-footer').style.display = 'flex';
+        document.getElementById('progress-area').style.display = 'block';
+        document.getElementById('header-desc').style.display = 'block';
     }
 
     // Progress Bar Updates
