@@ -9,17 +9,28 @@ let currentStep = 1;
 const totalSteps = 5;
 
 // --- AI CONFIGURATION ---
-const API_KEY = "AIzaSyDlIQZ-XUGLxnlPzapXWJDVu3ZJ5n2sar4"; 
+// Ensure this key is exactly as it appears in Google AI Studio
+const API_KEY = "AIzaSyDLIQZ-XUGLxnlPzapXWJDVu3ZJ5n2sar4"; 
 
 async function getAIPlan() {
-    const output = document.getElementById('ai-plan-output');
+    // Select the three different output boxes
+    const nutritionBox = document.getElementById('nutrition-output');
+    const workoutBox = document.getElementById('workout-output');
+    const mentalBox = document.getElementById('mental-output');
     
     // Capture user data for the prompt
-    const name = document.getElementById('user-name')?.value || "Traveler";
+    const name = document.getElementById('user-name')?.value || "User";
     const goal = document.querySelector('.option-card.active')?.innerText.split('\n')[0] || "General Health";
-    const diet = document.querySelector('.btn-option.active')?.innerText || "None";
+    const diet = document.querySelector('.btn-option.active')?.innerText || "Standard";
 
-    const prompt = `Act as a wellness coach for 'Lavender Leaf'. Create a 4-bullet point plan for ${name}. Goal: ${goal}. Diet: ${diet}. Keep it calm and healing.`;
+    // This prompt asks the AI to separate sections with "###" so we can split them
+    const prompt = `Act as a wellness coach. Create a plan for ${name}. Goal: ${goal}. Diet: ${diet}.
+    Format exactly like this:
+    Nutrition: (2 bullet points)
+    ###
+    Workout: (2 bullet points)
+    ###
+    Mental Health: (2 bullet points)`;
 
     try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
@@ -27,22 +38,37 @@ async function getAIPlan() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
+        
         const data = await response.json();
-        output.innerText = data.candidates[0].content.parts[0].text;
+        const fullText = data.candidates[0].content.parts[0].text;
+
+        // Split the text based on the ### divider
+        const sections = fullText.split('###');
+        
+        // Inject sections into the three windows
+        nutritionBox.innerText = sections[0]?.trim() || "Building your nutrition plan...";
+        workoutBox.innerText = sections[1]?.trim() || "Designing your workout...";
+        mentalBox.innerText = sections[2]?.trim() || "Setting your mental goals...";
+
     } catch (e) {
-        output.innerText = "The AI is currently offline, but remember: hydration and sleep are the foundations of equilibrium!";
+        // Fallback "Smart" plan if the AI is offline
+        nutritionBox.innerText = `• Follow ${diet} guidelines\n• Prioritize lean proteins`;
+        workoutBox.innerText = `• 20 min walk focused on ${goal}\n• Daily stretching routine`;
+        mentalBox.innerText = "• 5 min mindful breathing\n• Track your water intake";
+        console.error("AI Fetch Error:", e);
     }
 }
 
 function updateUI() {
     contentArea.innerHTML = '';
     const template = document.getElementById(`template-step-${currentStep}`);
+    
     if (template) {
         const clone = template.content.cloneNode(true);
         contentArea.appendChild(clone);
     }
 
-    // Step 6: Trigger AI Results
+    // Step 6 is the Results Dashboard
     if (currentStep === 6) {
         document.getElementById('app-footer').style.display = 'none';
         document.getElementById('progress-area').style.display = 'none';
@@ -50,7 +76,7 @@ function updateUI() {
         getAIPlan();
     }
 
-    // Update Progress
+    // Progress Bar Updates
     if (currentStep <= totalSteps) {
         const progressPercent = (currentStep / totalSteps) * 100;
         progressFill.style.width = progressPercent + '%';
@@ -58,20 +84,36 @@ function updateUI() {
         stepLabel.innerText = currentStep;
     }
 
+    // Navigation Button Visibility
     backBtn.style.visibility = (currentStep === 1 || currentStep === 6) ? 'hidden' : 'visible';
     nextBtn.innerText = (currentStep === 5) ? 'Generate AI Plan ✨' : 'Continue';
 }
 
-// Global listener for buttons
+// Global click listener for selection buttons (Gender/Activity/Goals)
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.btn-option, .option-card');
     if (btn) {
-        btn.parentElement.querySelectorAll('.btn-option, .option-card').forEach(b => b.classList.remove('active'));
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.btn-option, .option-card').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
 });
 
-nextBtn.addEventListener('click', () => { if (currentStep < 6) { currentStep++; updateUI(); } });
-backBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateUI(); } });
+// Next Button Click
+nextBtn.addEventListener('click', () => {
+    if (currentStep < 6) {
+        currentStep++;
+        updateUI();
+    }
+});
 
+// Back Button Click
+backBtn.addEventListener('click', () => {
+    if (currentStep > 1) {
+        currentStep--;
+        updateUI();
+    }
+});
+
+// Launch the first step
 updateUI();
