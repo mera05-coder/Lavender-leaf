@@ -6,10 +6,10 @@ const stepLabel = document.getElementById('current-step');
 const percentText = document.getElementById('percent-text');
 
 let currentStep = 1;
-const totalSteps = 5;
+const totalSteps = 6;
 
 // --- AI CONFIGURATION ---
-const API_KEY = "AIzaSyDLIQZ-XUGLxnlPzapXWJDVu3ZJ5n2sar4"; 
+const API_KEY = "AIzaSyBFyKuNRFlC0EYaW5Q25ZrMzwJkJIIzF68"; 
 
 async function getAIPlan() {
     console.log("🚀 getAIPlan() called, currentStep:", currentStep);
@@ -59,7 +59,8 @@ async function getAIPlan() {
         const data = await response.json();
         console.log("📥 API Response:", data);
         
-        const fullText = data.candidates[0].content.parts[0].text;
+      const fullText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+if (!fullText) throw new Error("Invalid API response structure");
         console.log("📝 Full AI text:", fullText);
 
         // Split the text based on the ### divider
@@ -98,9 +99,12 @@ function updateUI() {
 
     // Step 6 is the Results Dashboard
     if (currentStep === 6) {
-        console.log("📊 Showing results page (step 6)");
-        document.getElementById('app-footer').style.display = 'none';
-        document.getElementById('progress-area').style.display = 'none';
+      const footer = document.getElementById('app-footer');
+const progress = document.getElementById('progress-area');
+const header = document.getElementById('header-desc');
+if (footer) footer.style.display = 'none';
+if (progress) progress.style.display = 'none';
+if (header) header.style.display = 'none';
         document.getElementById('header-desc').style.display = 'none';
         
         // Use setTimeout to ensure DOM elements are ready
