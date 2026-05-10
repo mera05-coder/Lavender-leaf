@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavender Leaf | AI Wellness Journey</title>
+    <link rel="stylesheet" href="LFcss.css">
+</head>
+<body>
+
+    <div class="container">
+        <header id="app-header">
+            <div class="logo">🌿 Lavender Leaf</div>
+            <h1>Your Wellness Journey</h1>
+            <p id="header-desc">Complete your profile for an AI-powered plan</p>
+        </header>
+
+        <div id="progress-area" class="progress-container">
+            <div class="step-info">Step <span id="current-step">1</span> of 5</div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress"></div>
+            </div>
+            <div class="percentage" id="percent-text">20%</div>
+        </div>
+
+        <main id="step-content">
+            </main>
+
+        <footer id="app-footer">
+            <button id="back-btn" class="btn-secondary">Back</button>
+            <button id="next-btn" class="btn-primary">Continue</button>
+        </footer>
+    </div>
+
+    <template id="template-step-1">
+        <section class="step">
+            <h2>👤 About You</h2>
+            <div class="input-group">
+                <label>What's your name?</label>
+                <input type="text" id="user-name" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" id="user-age" value="25">
+            </div>
+            <div class="input-group">
+                <label>Gender</label>
+                <div class="button-group">
+                    <button type="button" class="btn-option active">Female</button>
+                    <button type="button" class="btn-option">Male</button>
+                    <button type="button" class="btn-option">Other</button>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="template-step-2">
+        <section class="step">
+            <h2>📏 Body Stats</h2>
+            <div class="row">
+                <div class="input-group">
+                    <label>Height (ft)</label>
+                    <input type="number" id="user-height-ft" value="5">
+                </div>
+                <div class="input-group">
+                    <label>Height (in)</label>
+                    <input type="number" id="user-height-in" value="7">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Weight (lbs)</label>
+                <input type="number" id="user-weight" value="150">
+            </div>
+        </section>
+    </template>
+
+    <template id="template-step-3">
+        <section class="step">
+            <h2>⚡ Your Lifestyle</h2>
+            <label>Daily Activity</label>
+            <div class="vertical-options">
+                <button type="button" class="option-card active">Lightly Active <span>1-3 days/week</span></button>
+                <button type="button" class="option-card">Moderately Active <span>3-5 days/week</span></button>
+                <button type="button" class="option-card">Very Active <span>6-7 days/week</span></button>
+            </div>
+        </section>
+    </template>
+
+    <template id="template-step-4">
+        <section class="step">
+            <h2>🎯 Your Goals</h2>
+            <label>Primary Focus</label>
+            <div class="vertical-options">
+                <button type="button" class="option-card active">Mental Clarity <span>Reduce stress & anxiety</span></button>
+                <button type="button" class="option-card">Weight Management <span>Lose or maintain weight</span></button>
+                <button type="button" class="option-card">Physical Strength <span>Build muscle & endurance</span></button>
+            </div>
+        </section>
+    </template>
+
+    <template id="template-step-5">
+        <section class="step">
+            <h2>🥗 Dietary Preferences</h2>
+            <label>Restrictions</label>
+            <div class="button-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button type="button" class="btn-option">Vegan</button>
+                <button type="button" class="btn-option">Gluten-Free</button>
+                <button type="button" class="btn-option">Dairy-Free</button>
+                <button type="button" class="btn-option active">None</button>
+            </div>
+        </section>
+    </template>
+
+    <template id="template-step-6">
+        <section class="step result-screen">
+            <div class="result-header">
+                <h2>✨ Your AI Wellness Plan</h2>
+                <p>Lavender Leaf AI is personalizing your equilibrium guide...</p>
+            </div>
+            <div id="ai-plan-output" class="plan-details">
+                Loading your smart plan...
+            </div>
+            <button type="button" class="btn-primary" style="width: 100%; margin-top: 25px;" onclick="window.location.reload()">Start New Journey</button>
+        </section>
+    </template>
+
+    <script src="LFjs.js"></script>
+</body>
+</html>
