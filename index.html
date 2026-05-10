@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lavender Leaf | AI Wellness Journey</title>
+    <title>Lavender Leaf | AI Wellness Dashboard</title>
     <link rel="stylesheet" href="LFcss.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
         <header id="app-header">
             <div class="logo">🌿 Lavender Leaf</div>
             <h1>Your Wellness Journey</h1>
-            <p id="header-desc">Complete your profile for an AI-powered plan</p>
+            <p id="header-desc">Complete your profile for a personalized AI plan</p>
         </header>
 
         <div id="progress-area" class="progress-container">
@@ -60,16 +60,16 @@
             <div class="row">
                 <div class="input-group">
                     <label>Height (ft)</label>
-                    <input type="number" id="user-height-ft" value="5">
+                    <input type="number" value="5">
                 </div>
                 <div class="input-group">
                     <label>Height (in)</label>
-                    <input type="number" id="user-height-in" value="7">
+                    <input type="number" value="7">
                 </div>
             </div>
             <div class="input-group">
                 <label>Weight (lbs)</label>
-                <input type="number" id="user-weight" value="150">
+                <input type="number" value="150">
             </div>
         </section>
     </template>
@@ -106,7 +106,7 @@
                 <button type="button" class="btn-option">Vegan</button>
                 <button type="button" class="btn-option">Gluten-Free</button>
                 <button type="button" class="btn-option">Dairy-Free</button>
-                <button type="button" class="btn-option active">None</button>
+                <button type="button" class="btn-option active">Standard</button>
             </div>
         </section>
     </template>
@@ -114,12 +114,32 @@
     <template id="template-step-6">
         <section class="step result-screen">
             <div class="result-header">
-                <h2>✨ Your AI Wellness Plan</h2>
-                <p>Lavender Leaf AI is personalizing your equilibrium guide...</p>
+                <h2>✨ Your Equilibrium Plan</h2>
+                <p>Tailored by Lavender Leaf AI</p>
             </div>
-            <div id="ai-plan-output" class="plan-details">
-                Loading your smart plan...
+
+            <div class="dashboard-grid">
+                
+                <div class="plan-card">
+                    <div class="card-icon">🥗</div>
+                    <h3>Nutrition</h3>
+                    <div id="nutrition-output" class="output-text">Building your menu...</div>
+                </div>
+
+                <div class="plan-card">
+                    <div class="card-icon">💪</div>
+                    <h3>Workout</h3>
+                    <div id="workout-output" class="output-text">Planning your reps...</div>
+                </div>
+
+                <div class="plan-card">
+                    <div class="card-icon">🧘</div>
+                    <h3>Mental Health</h3>
+                    <div id="mental-output" class="output-text">Finding your calm...</div>
+                </div>
+
             </div>
+
             <button type="button" class="btn-primary" style="width: 100%; margin-top: 25px;" onclick="window.location.reload()">Start New Journey</button>
         </section>
     </template>
