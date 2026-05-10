@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #fdfcfb 0%, #e2d1f9 100%);
     display: flex;
     justify-content: center;
@@ -19,13 +19,13 @@ body {
 .container {
     background: white;
     width: 95%;
-    max-width: 450px;
+    max-width: 480px;
     padding: 30px;
     border-radius: 25px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
-/* Progress Section */
+/* Progress Bar */
 .progress-bar {
     background: #f0f0f0;
     height: 10px;
@@ -38,51 +38,99 @@ body {
     background: var(--primary-purple);
     height: 100%;
     width: 20%;
-    transition: width 0.4s ease;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Form Elements */
+/* Input Styles */
 .input-group { margin-bottom: 20px; }
 label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
-input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px; outline: none; box-sizing: border-box;}
+input { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    outline: none; 
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+input:focus { border-color: var(--primary-purple); }
 
 .row { display: flex; gap: 10px; }
 .button-group { display: flex; gap: 10px; }
 .vertical-options { display: flex; flex-direction: column; gap: 12px; }
 
+/* Selection Buttons */
 .btn-option, .option-card {
     background: white;
     border: 1px solid var(--border-color);
     padding: 12px;
     border-radius: 12px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s;
     text-align: left;
 }
 
 .option-card span { display: block; font-size: 0.8rem; color: var(--text-gray); }
 
-/* Active States */
 .btn-option.active, .option-card.active {
     background-color: var(--light-lavender) !important;
     border-color: var(--primary-purple) !important;
     color: var(--primary-purple) !important;
     font-weight: bold;
+    transform: scale(1.02);
 }
 
 /* Navigation */
 footer { display: flex; justify-content: space-between; margin-top: 30px; }
-.btn-primary { background: var(--primary-purple); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+.btn-primary { 
+    background: var(--primary-purple); 
+    color: white; 
+    border: none; 
+    padding: 12px 30px; 
+    border-radius: 50px; 
+    cursor: pointer; 
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(157, 80, 187, 0.3);
+}
 .btn-secondary { background: none; border: none; color: var(--text-gray); cursor: pointer; font-weight: 600; }
 
-/* AI Plan Styling */
-.plan-details {
-    background: #fafafa;
-    padding: 20px;
-    border-radius: 15px;
-    border-left: 5px solid var(--primary-purple);
+/* --- NEW DASHBOARD GRID --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+    animation: slideUp 0.6s ease-out;
+}
+
+.plan-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 18px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.plan-card h3 {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: var(--primary-purple);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.output-text {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.5;
     white-space: pre-line;
-    line-height: 1.6;
-    min-height: 100px;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
